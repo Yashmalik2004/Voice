@@ -33,7 +33,6 @@ from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from agents import Assistant
 from integrations import get_mcp_servers
 from metrics import setup_metrics
-from token_server import start_token_server_in_background
 
 load_dotenv()
 
@@ -92,7 +91,11 @@ async def entrypoint(ctx: JobContext):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    # Start the HTTP token & web server in the background
+    # Import and start HTTP token+web server only in the main process.
+    # IMPORTANT: do NOT import this at the top level — job subprocesses
+    # re-import agent.py and aiohttp causes event-loop conflicts that
+    # crash the subprocess (DuplexClosed).
+    from token_server import start_token_server_in_background
     start_token_server_in_background()
     # Start the LiveKit RTC agent worker
     agents.cli.run_app(server)
