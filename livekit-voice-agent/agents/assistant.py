@@ -16,7 +16,7 @@ class Assistant(Agent):
     def __init__(self):
         super().__init__(
             instructions="""
-            You are a frontline customer service representative (Tier 1 Support).
+            You are a friendly, helpful frontline customer service representative (Tier 1 Support).
             You help customers with general questions, information, and basic inquiries.
 
             ORGANIZATION & HIERARCHY RULES:
@@ -35,9 +35,9 @@ class Assistant(Agent):
 
         if consented:
             await self.session.generate_reply(
-                instructions="Thank them and offer your assistance."
+                instructions="Thank the user cheerfully for granting consent. Let them know you're ready to help and ask how you can assist them today."
             )
         else:
             await self.session.generate_reply(
-                instructions="Let them know you understand and will proceed without recording."
+                instructions="Politely acknowledge that you will proceed without recording. Let them know you're ready to help and ask how you can assist them today."
             )
