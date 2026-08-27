@@ -28,11 +28,6 @@ class Assistant(Agent):
         )
 
     async def on_enter(self) -> None:
-        await self.session.generate_reply(
-            instructions="""
-            Warmly greet the user and introduce yourself as the customer service assistant.
-            Briefly mention that the call may be recorded for quality assurance purposes.
-            Then immediately ask how you can help them today.
-            Keep it concise — 2-3 sentences total.
-            """
+        await self.session.say(
+            "Hello! I'm your customer service assistant. This call may be recorded for quality assurance. How can I help you today?"
         )
