@@ -1,0 +1,45 @@
+/* ─── Status Indicator ─────────────────────────────────────────────────── */
+
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.status-orb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* State colours */
+.status-idle        { background: #6b7280; }
+.status-connecting  { background: #f59e0b; animation: pulse-orb 1.2s ease-in-out infinite; }
+.status-listening   { background: #10b981; animation: pulse-orb 1.5s ease-in-out infinite; box-shadow: 0 0 12px #10b981cc; }
+.status-thinking    { background: #8b5cf6; animation: pulse-orb 0.9s ease-in-out infinite; box-shadow: 0 0 12px #8b5cf6cc; }
+.status-speaking    { background: #3b82f6; animation: pulse-orb 0.7s ease-in-out infinite; box-shadow: 0 0 16px #3b82f6cc; }
+.status-disconnected { background: #6b7280; }
+.status-error       { background: #ef4444; box-shadow: 0 0 10px #ef4444aa; }
+
+@keyframes pulse-orb {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(1.25); }
+}
+
+.status-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #9ca3af;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.status-error-detail {
+  font-size: 0.75rem;
+  color: #ef4444;
+  margin-top: 6px;
+  max-width: 280px;
+  text-align: center;
+}

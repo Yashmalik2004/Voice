@@ -1,0 +1,20 @@
+# Python
+.venv/
+**/__pycache__/
+*.py[cod]
+*.pyo
+
+# Secrets
+.env
+.env.local
+.env.*
+**/.env
+**/.env.*
+
+# Frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.vite/
+**/.vite/
