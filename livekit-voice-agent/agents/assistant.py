@@ -1,13 +1,12 @@
 """
 Main customer-service assistant.
 
-Handles general inquiries. Runs the consent workflow on entry, then
-exposes weather lookup and manager escalation as LLM-callable tools.
+Handles general inquiries. Greets the user, mentions recording policy,
+then immediately offers assistance. No blocking consent gate.
 """
 
 from livekit.agents import Agent
 
-from tasks.consent import CollectConsent
 from tools.weather import lookup_weather
 from tools.escalation import escalate_to_manager
 
@@ -29,15 +28,11 @@ class Assistant(Agent):
         )
 
     async def on_enter(self) -> None:
-        # Run consent workflow before the main conversation begins.
-        # Passing chat_ctx preserves any prior context across the handoff.
-        consented = await CollectConsent(chat_ctx=self.chat_ctx)
-
-        if consented:
-            await self.session.generate_reply(
-                instructions="Thank the user cheerfully for granting consent. Let them know you're ready to help and ask how you can assist them today."
-            )
-        else:
-            await self.session.generate_reply(
-                instructions="Politely acknowledge that you will proceed without recording. Let them know you're ready to help and ask how you can assist them today."
-            )
+        await self.session.generate_reply(
+            instructions="""
+            Warmly greet the user and introduce yourself as the customer service assistant.
+            Briefly mention that the call may be recorded for quality assurance purposes.
+            Then immediately ask how you can help them today.
+            Keep it concise — 2-3 sentences total.
+            """
+        )
