@@ -11,13 +11,10 @@ from livekit.agents.beta.workflows import TaskGroup
 from tasks.email import GetEmailTask
 from tasks.address import GetAddressTask
 
-
 class CheckoutAgent(Agent):
     async def on_enter(self) -> None:
         task_group = TaskGroup()
 
-        # Each task wrapped in a lambda so it can be re-instantiated if the
-        # user navigates back through the workflow.
         task_group.add(
             lambda: GetEmailTask(),
             id="email",
